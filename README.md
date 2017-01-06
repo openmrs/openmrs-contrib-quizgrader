@@ -30,6 +30,7 @@ Configuration:
 $ cd app
 $ mkdir config
 $ cp default.sample.json config/default.json
+```
 
 Edit the settings in `app/config/default.json` as needed. The key from Google Sheets API (JSON format) and API key and user for Discourse must be set for things to work properly.
 
