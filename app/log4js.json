@@ -1,0 +1,10 @@
+{
+  "appenders": [
+    {
+      "type": "dateFile",
+      "filename": "logs/quizgrader.log",
+      "pattern": "-yyyy-MM",
+      "alwaysIncludePattern": false
+    }
+  ]
+}

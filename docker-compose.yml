@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  app:
+    build: app
+    volumes:
+      - ./app:/app
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=development
