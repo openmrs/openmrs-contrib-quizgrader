@@ -28,6 +28,7 @@ Configuration:
 
 ```bash
 $ cd app
+$ mkdir logs
 $ mkdir config
 $ cp default.sample.json config/default.json
 ```
@@ -37,6 +38,6 @@ Edit the settings in `app/config/default.json` as needed. The key from Google Sh
 ## Running the grader
 
 ```bash
-$ docker-compose up -f production.yml -d
+$ docker-compose up -d
 ```
 
