@@ -28,6 +28,7 @@ Configuration:
 
 ```bash
 $ cd app
+$ mkdir logs
 $ mkdir config
 $ cp default.sample.json config/default.json
 ```
