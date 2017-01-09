@@ -1,4 +1,4 @@
-FROM node
+FROM mhart/alpine-node:6
 
 RUN npm install --global express pg
 
