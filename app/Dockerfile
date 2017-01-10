@@ -10,4 +10,4 @@ EXPOSE 80
 
 WORKDIR /app
 
-CMD ["/usr/local/bin/node", "/app/app.js"]
+CMD ["node", "/app/app.js"]
