@@ -1,4 +1,4 @@
-FROM node
+FROM mhart/alpine-node:6
 
 RUN npm install --global express pg
 
@@ -10,4 +10,4 @@ EXPOSE 80
 
 WORKDIR /app
 
-CMD ["/usr/local/bin/node", "/app/app.js"]
+CMD ["node", "/app/app.js"]
