@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  app:
+    environment:
+      spreadsheetId: 234lk234jlwlk3j4lGTfjw2e3kJL334kjfjr3kj334fw
+      project_id: name-of-project
+      private_key_id: cae0016f10535e205f560bf226ad75ab33dcd4dc
+      private_key: "-----BEGIN PRIVATE KEY-----\\n\
+        MIIEvgIBAD...\\n\
+        asdasdadad...\\n\
+        -----END PRIVATE KEY-----\\n"
+      client_email: username@name-of-project.iam.gserviceaccount.com
+      client_id: 394984690303484508303
+      client_x509_cert_url: username%name-of-project.iam.gserviceaccount.com
+      apiUsername: username
+      apiKey: ..."
