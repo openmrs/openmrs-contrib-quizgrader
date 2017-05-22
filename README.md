@@ -24,7 +24,7 @@ $ docker-compose -f docker-compose.yml -f docker-compose-dev.yml up
 
 Configuration:
 
-Edit the settings in `docker-compose.yaml` as needed. The key from Google Sheets API (JSON format) and API key and user for Discourse must be set for things to work properly.
+Edit the settings in `docker-compose.yml` as needed. The key from Google Sheets API (JSON format) and API key and user for Discourse must be set for things to work properly.
 
 ## Running the grader
 
