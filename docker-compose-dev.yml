@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  app:
+    env_file:
+      - dev.env
+    environment:
+      - NODE_ENV=development
