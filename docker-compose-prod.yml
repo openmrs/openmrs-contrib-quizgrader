@@ -2,6 +2,10 @@ version: '2'
 
 services:
   app:
+    build:
+      - burke/quizgrader
+    ports:
+      - "80:80"
     env_file:
       - prod.env
     environment:
