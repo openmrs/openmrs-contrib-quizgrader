@@ -1,13 +1,10 @@
-FROM node
-
-RUN npm install --global express pg
+FROM node:7
 
 ENV NODE_PATH=/usr/local/lib/node_modules
-
-VOLUME /app
+RUN npm install
+COPY . /app
+RUN chmod a+x /app/start.sh
 
 EXPOSE 80
-
 WORKDIR /app
-
-CMD ["/usr/local/bin/node", "/app/app.js"]
+CMD ["/app/start.sh"]

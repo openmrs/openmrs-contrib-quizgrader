@@ -1,4 +1,3 @@
-// Sample config.json (belongs in ./config/ folder)
 {
 	"grader": {
 		"passingGrade": 60,
@@ -6,7 +5,7 @@
 		"minIntervalSeconds": 30
 	},
 	"quizSheet": {
-		"spreadsheetId": "234lk234jlwlk3j4lGTfjw2e3kJL334kjfjr3kj334fw",
+		"spreadsheetId": "${spreadsheetId}",
 		"keyRow": 2,
 		"nameCol": "K",
 		"openmrsIdCol": "L",
@@ -20,20 +19,19 @@
 	},
 	"googleKey": {
 		"type": "service_account",
-		"project_id": "name-of-project",
-		"private_key_id": "cae0016f10535e205f560bf226ad75ab33dcd4dc",
-		"private_key_id": "...",
-		"private_key": "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n",
-		"client_email": "username@name-of-project.iam.gserviceaccount.com",
-		"client_id": "394984690303484508303",
+		"project_id": "${project_id}",
+		"private_key_id": "${private_key_id}",
+		"private_key": "${private_key}",
+		"client_email": "${client_email}",
+		"client_id": "${client_id}",
 		"auth_uri": "https://accounts.google.com/o/oauth2/auth",
 		"token_uri": "https://accounts.google.com/o/oauth2/token",
 		"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-		"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/username%name-of-project.iam.gserviceaccount.com"
+		"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/${client_x509_cert_url}"
 	},
 	"discourse": {
 		"host": "talk.openmrs.org",
-		"apiUsername": "username",
-		"apiKey": "..."
+		"apiUsername": "${apiUsername}",
+		"apiKey": "${apiKey}"
 	}
 }
