@@ -2,8 +2,7 @@ version: '2'
 
 services:
   app:
-    build:
-      - burke/quizgrader
+    image: openmrsinfra/quizgrader
     ports:
       - "80:80"
     env_file:

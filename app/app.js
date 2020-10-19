@@ -26,7 +26,7 @@ var PORT = process.env.PORT || 80;
 var app = express();
 
 app.get('/', function(req, res) {
-	res.redirect('http://om.rs/devstages');
+	res.redirect('https://om.rs/devstages');
 })
 
 app.get('/ping', function(req, res) {
@@ -37,7 +37,7 @@ app.get('/ping', function(req, res) {
 
 app.get('/status', function(req, res) {
 	logger.info('status check');
-	grader.verify().then(res.send('ok')).catch(
+	grader.verify().then(() => res.send('ok')).catch(
 		err => res.status(500).send(err)
 	);
 });

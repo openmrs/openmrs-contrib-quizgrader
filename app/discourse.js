@@ -29,8 +29,18 @@ var API_KEY = config.get('discourse.apiKey');
  */
 var getUser = Promise.method(function(username) {
 	return new Promise(function(resolve, reject) {
-		var req = https.get('https://' + HOST + '/users/' + username + '.json' +
-			'?api_key=' + API_KEY + '&api_username=' + API_USERNAME, (res) => {
+		var options = {
+			hostname: HOST,
+			port: 443,
+			path: '/users/' + username + '.json',
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Api-Username': API_USERNAME,
+				'Api-Key': API_KEY
+			}
+		};
+		var req = https.request(options, (res) => {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
 			res.on('end', () => resolve(JSON.parse(rawData)));
@@ -54,8 +64,18 @@ var getUser = Promise.method(function(username) {
  */
 var getBadge = Promise.method(function(badgeName) {
 	return new Promise(function(resolve, reject) {
-		var req = https.get('https://' + HOST + '/badges.json' +
-			'?api_key=' + API_KEY + '&api_username=' + API_USERNAME, (res) => {
+		var options = {
+			hostname: HOST,
+			port: 443,
+			path: '/badges.json',
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Api-Username': API_USERNAME,
+				'Api-Key': API_KEY
+			}
+		};
+		var req = https.request(options, (res) => {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
 			res.on('end', () => {
@@ -90,13 +110,14 @@ var grantBadge = Promise.method(function(username, badgeId) {
 		var options = {
 			hostname: 'talk.openmrs.org',
 			port: 443,
-			path: '/user_badges.json?api_key=' + API_KEY +
-				'&api_username=' + API_USERNAME + 
+			path: '/user_badges.json?' +
 				'&badge_id=' + badgeId + '&username=' + username,
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/x-www-form-urlencoded',
-				'Content-Length': 0
+				'Content-Length': 0,
+				'Api-Username': API_USERNAME,
+				'Api-Key': API_KEY
 			}
 		};
 		var req = https.request(options, (res) => {
@@ -129,15 +150,15 @@ var sendMessage = Promise.method(function(username, title, message) {
 		var options = {
 			hostname: 'talk.openmrs.org',
 			port: 443,
-			path: '/posts.json?api_key=' + API_KEY +
-				'&api_username=' + API_USERNAME + 
-				'&archetype=private_message&title=' + 
+			path: '/posts.json?archetype=private_message&title=' + 
 				encodeURIComponent(title) + '&raw=' + 
 				encodeURIComponent(message) + '&target_usernames=' + username,
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/x-www-form-urlencoded',
-				'Content-Length': 0
+				'Content-Length': 0,
+				'Api-Username': API_USERNAME,
+				'Api-Key': API_KEY
 			}
 		};
 		var req = https.request(options, (res) => {
@@ -170,7 +191,7 @@ var sendMessage = Promise.method(function(username, title, message) {
  */
 function verify() {
 	return new Promise(function(resolve, reject) {
-		getUser(API_USERNAME).then(resolve('verified')).catch( err => reject(err));
+		getUser(API_USERNAME).then(() => resolve('verified')).catch( err => reject(err));
 	})
 }
 
