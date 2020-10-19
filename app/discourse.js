@@ -43,7 +43,14 @@ var getUser = Promise.method(function(username) {
 		var req = https.request(options, (res) => {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
-			res.on('end', () => resolve(JSON.parse(rawData)));
+			res.on('end', () => {
+				if (res.statusCode !== 200) {
+					logger.warn("Unexpected response when getting user " + username);
+					logger.warn("Expected 200 OK, but got " + res.statusCode + " " + res.statusMessage);
+					reject(new Error(rawData));
+				}
+				resolve(JSON.parse(rawData));
+			});
 		});
 		req.on('error', (err) => {
 			logger.error(err);
@@ -79,6 +86,11 @@ var getBadge = Promise.method(function(badgeName) {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
 			res.on('end', () => {
+				if (res.statusCode !== 200) {
+					logger.warn("Unexpected response when getting badge info for " + badgeName);
+					logger.warn("Expected 200 OK, but got " + res.statusCode + " " + res.statusMessage);
+					reject(new Error(rawData));
+				}
 				var data = JSON.parse(rawData);
 				var badges = data.badges;
 				resolve(
@@ -124,6 +136,11 @@ var grantBadge = Promise.method(function(username, badgeId) {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
 			res.on('end', () => {
+				if (res.statusCode !== 200) {
+					logger.warn("Unexpected response when granting badge " + badgeId + " to " + username);
+					logger.warn("Expected 200 OK, but got " + res.statusCode + " " + res.statusMessage);
+					reject(new Error(rawData));
+				}
 				resolve(JSON.parse(rawData));
 			});
 		});
@@ -165,6 +182,11 @@ var sendMessage = Promise.method(function(username, title, message) {
 			var rawData = '';
 			res.on('data', (d) => { rawData += d; });
 			res.on('end', () => {
+				if (res.statusCode !== 200) {
+					logger.warn("Unexpected response when notifying user " + username);
+					logger.warn("Expected 200 OK, but got " + res.statusCode + " " + res.statusMessage);
+					reject(new Error(rawData));
+				}
 				resolve(JSON.parse(rawData));
 			});
 		});
