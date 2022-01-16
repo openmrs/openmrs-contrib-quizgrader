@@ -7,15 +7,15 @@
 	"quizSheet": {
 		"spreadsheetId": "${spreadsheetId}",
 		"keyRow": 2,
-		"nameCol": "K",
-		"openmrsIdCol": "L",
-		"emailCol": "M",
-		"issueCol": "N",
-		"pullRequestCol": "O",
+		"nameCol": "C",
+		"openmrsIdCol": "D",
+		"emailCol": "B",
+		"issueCol": "E",
+		"pullRequestCol": "F",
 		"responseStartRow": 3,
-		"responseStartCol": "P",
-		"responseEndCol": "AZ",
-		"gradeCol": "BA"
+		"responseStartCol": "G",
+		"responseEndCol": "AN",
+		"gradeCol": "AO"
 	},
 	"googleKey": {
 		"type": "service_account",

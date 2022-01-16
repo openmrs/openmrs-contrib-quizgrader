@@ -89,7 +89,7 @@ var getKey = Promise.method(function(authClient) {
       var answers = getCols(values, RESPONSE_START_COL, RESPONSE_END_COL);
       resolve(answers);
     }).catch(err => {
-      logger.error(err);
+      logger.error(JSON.stringify(err));
       reject(err);
     });
   });
