@@ -33,5 +33,8 @@
 		"host": "talk.openmrs.org",
 		"apiUsername": "${apiUsername}",
 		"apiKey": "${apiKey}"
+	},
+	"logger": {
+		"level": "${log_level}"
 	}
 }

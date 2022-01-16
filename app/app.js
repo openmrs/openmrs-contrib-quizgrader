@@ -14,9 +14,11 @@
  *
  */
 
+var config = require('config');
 var log4js = require('log4js');
-log4js.configure('log4js.json');
 var logger = log4js.getLogger('app.js');
+log4js.configure('log4js.json');
+logger.level = config.get('logger.level');
 var express = require('express');
 var Promise = require('bluebird');
 var grader = require('./grader');

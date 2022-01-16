@@ -6,11 +6,12 @@
  * who pass, badges granted on Discourse.
  */
 
+var config = require('config');
 var log4js = require('log4js');
 var logger = log4js.getLogger('grader.js');
+logger.level = config.get('logger.level');
 var quiz = require('./quiz');
 var discourse = require('./discourse');
-var config = require('config');
 var Promise = require('bluebird');
 var fs = require('fs');
 

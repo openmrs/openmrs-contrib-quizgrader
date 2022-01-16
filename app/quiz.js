@@ -32,18 +32,19 @@
  *  gradeCol - column (letter) where grade (percentage) should be written
  */
 
-var log4js = require("log4js");
-var logger = log4js.getLogger('grader.js');
-var google = require('googleapis');
-var sheets = google.sheets('v4');
+var config = require('config');
+var log4js = require('log4js');
+var logger = log4js.getLogger('quiz.js');
+logger.level = config.get('logger.level');
+var { google } = require('googleapis');
+var sheets = google.sheets({version:'v4'});
 var SpreadsheetColumn = require('spreadsheet-column');
 var scz = new SpreadsheetColumn({zero: true});
 // scz.fromInt(25) == 'Z'; scz.fromStr('AB') == 27
 var Promise = require('bluebird');
-var getValues = Promise.promisify(sheets.spreadsheets.values.get);
-var updateValues = Promise.promisify(sheets.spreadsheets.values.update);
+var getValues = Promise.promisify(sheets.spreadsheets.values.get.bind(sheets));
+var updateValues = Promise.promisify(sheets.spreadsheets.values.update.bind(sheets));
 
-var config = require('config');
 var SPREADSHEET_ID = config.get('quizSheet.spreadsheetId');
 var KEY_ROW = config.get('quizSheet.keyRow');
 var NAME_COL = config.get('quizSheet.nameCol');
@@ -85,7 +86,7 @@ var getKey = Promise.method(function(authClient) {
       range: KEY_ROW + ':' + KEY_ROW,
       auth: authClient    
     }).then(resp => {
-      var values = resp.values[0];
+      var values = resp.data.values[0];
       var answers = getCols(values, RESPONSE_START_COL, RESPONSE_END_COL);
       resolve(answers);
     }).catch(err => {
@@ -102,10 +103,10 @@ var getEntries = Promise.method(function(authClient) {
       range: '3:1000',
       auth: authClient      
     }).then(resp => {
-      var values = resp.values;
+      var values = resp.data.values;
       resolve(values);
     }).catch(err => {
-      logger.error(err);
+      logger.error(JSON.stringify(err));
       reject(err);
     });
   });
@@ -225,7 +226,7 @@ var recordGrade = Promise.method(function(authClient, i, grade) {
     }).then( resp => {
       resolve(resp);
     }).catch( err => {
-      logger.error(err);
+      logger.error(JSON.stringify(err));
       reject(err);
     })
   });

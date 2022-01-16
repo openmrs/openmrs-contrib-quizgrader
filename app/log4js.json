@@ -1,10 +1,16 @@
 {
-  "appenders": [
-    {
+  "appenders": {
+    "out": {
       "type": "dateFile",
       "filename": "logs/quizgrader.log",
       "pattern": "-yyyy-MM",
       "alwaysIncludePattern": false
     }
-  ]
+  },
+  "categories": {
+    "default": {
+      "appenders": [ "out" ],
+      "level": "warn"
+    }
+  }
 }
