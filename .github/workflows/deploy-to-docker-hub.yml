@@ -36,4 +36,4 @@ jobs:
           context: app
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/quizgrader:latest
+          tags: openmrsinfra/quizgrader:latest
