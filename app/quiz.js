@@ -172,7 +172,7 @@ var verify = Promise.coroutine(function* () {
     auth: authClient
   });
   var verifyRead = yield new Promise(function(resolve, reject) {
-    if (testRead && ('values' in testRead)) {
+    if (testRead && ('values' in testRead.data)) {
       resolve('ok');
     } else {
       reject('Unable to read spreadsheet.');

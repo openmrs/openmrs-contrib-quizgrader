@@ -40,7 +40,10 @@ app.get('/ping', function(req, res) {
 app.get('/status', function(req, res) {
 	logger.info('status check');
 	grader.verify().then(() => res.send('ok')).catch(
-		err => res.status(500).send(err)
+		err => {
+			logger.warn(err);
+			res.status(503).send(err);
+		}
 	);
 });
 
