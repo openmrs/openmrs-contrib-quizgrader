@@ -133,7 +133,7 @@ function getEntry(entries, i) {
 }
 
 function hasValidIssue(entry) {
-  var re = new RegExp('https?://issues\\.openmrs\\.org/browse/');
+  var re = new RegExp('^https?://openmrs\\.atlassian\\.net/browse/|^https?://issues\\.openmrs\\.org/browse/');
   var isValid = entry.issue && (entry.issue.search(re) != -1);
   if (!isValid) {
     logger.info('Entry for ' + entry.openmrsId + 
@@ -144,7 +144,7 @@ function hasValidIssue(entry) {
 }
 
 function hasValidPullRequest(entry) {
-  var re = new RegExp('https://github\\.com/openmrs/.*/pull/\\d+');
+  var re = new RegExp('^https://github\\.com/openmrs/.*/pull/\\d+');
   var isValid = entry.pullRequest && (entry.pullRequest.search(re) != -1);
   if (!isValid) {
     logger.info('Entry for ' + entry.openmrsId + 
