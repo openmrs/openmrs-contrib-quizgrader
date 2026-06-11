@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:22-alpine
 
 ENV NODE_PATH=/usr/local/lib/node_modules
 COPY . /app

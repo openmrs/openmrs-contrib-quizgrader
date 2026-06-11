@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/bin/sh -eux
 
 eval "cat <<EOF
 $(</app/config/default-sample.json)
