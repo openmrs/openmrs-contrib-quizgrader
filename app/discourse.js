@@ -120,7 +120,7 @@ var getBadge = Promise.method(function(badgeName) {
 var grantBadge = Promise.method(function(username, badgeId) {
 	return new Promise(function(resolve, reject) {
 		var options = {
-			hostname: 'talk.openmrs.org',
+			hostname: HOST,
 			port: 443,
 			path: '/user_badges.json?' +
 				'&badge_id=' + badgeId + '&username=' + username,
@@ -165,9 +165,9 @@ var grantBadge = Promise.method(function(username, badgeId) {
 var sendMessage = Promise.method(function(username, title, message) {
 	return new Promise(function(resolve, reject) {
 		var options = {
-			hostname: 'talk.openmrs.org',
+			hostname: HOST,
 			port: 443,
-			path: '/posts.json?archetype=private_message&title=' + 
+			path: '/posts.json?archetype=private_message&title=' +
 				encodeURIComponent(title) + '&raw=' + 
 				encodeURIComponent(message) + '&target_usernames=' + username,
 			method: 'POST',
