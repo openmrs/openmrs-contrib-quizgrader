@@ -5,7 +5,7 @@
 		"minIntervalSeconds": 30
 	},
 	"quizSheet": {
-		"spreadsheetId": "${spreadsheetId}",
+		"spreadsheetId": "",
 		"keyRow": 2,
 		"nameCol": "C",
 		"openmrsIdCol": "D",
@@ -19,22 +19,22 @@
 	},
 	"googleKey": {
 		"type": "service_account",
-		"project_id": "${project_id}",
-		"private_key_id": "${private_key_id}",
-		"private_key": "${private_key}",
-		"client_email": "${client_email}",
-		"client_id": "${client_id}",
+		"project_id": "",
+		"private_key_id": "",
+		"private_key": "",
+		"client_email": "",
+		"client_id": "",
 		"auth_uri": "https://accounts.google.com/o/oauth2/auth",
 		"token_uri": "https://accounts.google.com/o/oauth2/token",
 		"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-		"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/${client_x509_cert_url}"
+		"client_x509_cert_url": ""
 	},
 	"discourse": {
 		"host": "talk.openmrs.org",
-		"apiUsername": "${apiUsername}",
-		"apiKey": "${apiKey}"
+		"apiUsername": "",
+		"apiKey": ""
 	},
 	"logger": {
-		"level": "${log_level}"
+		"level": "warn"
 	}
 }
