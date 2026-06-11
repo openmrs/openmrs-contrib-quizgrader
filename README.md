@@ -13,21 +13,20 @@ The grader scans the Google Spreadsheet for any entries that have not been grade
 Check out the repository:
 
 ```bash
-$ git clone https://github.com/bmamlin/openmrs-contrib-quizgrader
-$ cd openmrs-contrib-quizgrader/app
-$ cp docker-compose-dev_example.yml docker-compose-dev.yml
-# edit docker-compose-dev.yml file and add all the necessary values
-$ docker-compose build
-$ docker-compose -f docker-compose.yml -f docker-compose-dev.yml up
+$ git clone https://github.com/openmrs/openmrs-contrib-quizgrader
+$ cd openmrs-contrib-quizgrader
+$ cp example.env dev.env
+# edit dev.env and fill in all required values
+$ docker compose -f docker-compose-dev.yml build
+$ docker compose -f docker-compose-dev.yml up
 ```
-
 
 Configuration:
 
-Edit the settings in `docker-compose.yml` as needed. The key from Google Sheets API (JSON format) and API key and user for Discourse must be set for things to work properly.
+Edit `dev.env` (for development) or `prod.env` (for production) with the required values. See `example.env` for the full list of settings, including the Google Sheets API service account credentials and the Discourse API key.
 
 ## Running the grader
 
 ```bash
-$ docker-compose up -d
+$ docker compose -f docker-compose-prod.yml up -d
 ```
