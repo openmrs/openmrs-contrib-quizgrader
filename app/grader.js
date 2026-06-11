@@ -2,98 +2,83 @@
 
 /*
  * Grades quiz entries. Any quiz entries that have not been graded
- * will get graded and the respondent(s) notified and, for those 
+ * will get graded and the respondent(s) notified and, for those
  * who pass, badges granted on Discourse.
  */
 
-var config = require('config');
-var log4js = require('log4js');
-var logger = log4js.getLogger('grader.js');
+const config = require('config');
+const log4js = require('log4js');
+const logger = log4js.getLogger('grader.js');
 logger.level = config.get('logger.level');
-var quiz = require('./quiz');
-var discourse = require('./discourse');
-var Promise = require('bluebird');
-var fs = require('fs');
+const quiz = require('./quiz');
+const discourse = require('./discourse');
+const fs = require('fs/promises');
 
-var PASSING_GRADE = config.get('grader.passingGrade');
-var BADGE_NAME = config.get('grader.badgeName');
-var MIN_INTERVAL_SECONDS = config.get('grader.minIntervalSeconds');
+const PASSING_GRADE = config.get('grader.passingGrade');
+const BADGE_NAME = config.get('grader.badgeName');
+const MIN_INTERVAL_SECONDS = config.get('grader.minIntervalSeconds');
 
-var lastRun = null;
+let lastRun = null;
+let passedTemplate;
+let failedTemplate;
 
-var passedTemplate;
-fs.readFile('./passed.md', 'utf8', (err, data) => {
-	if (err) {
-		logger.error('Failed to read passed template.');
+(async () => {
+	try {
+		[passedTemplate, failedTemplate] = await Promise.all([
+			fs.readFile('./passed.md', 'utf8'),
+			fs.readFile('./failed.md', 'utf8')
+		]);
+	} catch (err) {
+		logger.error('Failed to read message templates.');
 		logger.error(err);
 	}
-	passedTemplate = data;
-});
-var failedTemplate;
-fs.readFile('./failed.md', 'utf8', (err, data) => {
-	if (err) {
-		logger.error('Failed to read failed template.');
-		logger.error(err);
-	}
-	failedTemplate = data;
-});
+})();
 
-var handleGrade = function(openmrsId, grade) {
-	var passed = grade >= PASSING_GRADE;
-	if (passed) {
-		Promise.coroutine(function* () {
-			var badge = yield discourse.getBadge(BADGE_NAME);
-			yield discourse.grantBadge(openmrsId, badge.id);
-			var subject = 'Congratulations Smart Developer!';
-			var message = passedTemplate;
-			yield discourse.sendMessage(openmrsId, subject, message);
-		})().then( () => {
-			logger.info(openmrsId + ' granted ' + BADGE_NAME);
-		}).catch( err => {
-			logger.error('Error granting badge to ' + openmrsId);
+async function handleGrade(openmrsId, grade) {
+	if (grade >= PASSING_GRADE) {
+		try {
+			const badge = await discourse.getBadge(BADGE_NAME);
+			await discourse.grantBadge(openmrsId, badge.id);
+			await discourse.sendMessage(openmrsId, 'Congratulations Smart Developer!', passedTemplate);
+			logger.info(`${openmrsId} granted ${BADGE_NAME}`);
+		} catch (err) {
+			logger.error(`Error granting badge to ${openmrsId}`);
 			logger.error(err);
-		});
+		}
 	} else {
-		Promise.coroutine(function* () {
-			var subject = 'You did not pass the /dev/1 quiz';
-			var message = failedTemplate;
-			yield discourse.sendMessage(openmrsId, subject, message);			
-		})().then( () => {
-			logger.info(openmrsId + ' notified of failed quiz');
-		}).catch( err => {
-			logger.error('Error notifying ' + openmrsId + ' of failed quiz');
+		try {
+			await discourse.sendMessage(openmrsId, 'You did not pass the /dev/1 quiz', failedTemplate);
+			logger.info(`${openmrsId} notified of failed quiz`);
+		} catch (err) {
+			logger.error(`Error notifying ${openmrsId} of failed quiz`);
 			logger.error(err);
-		});
+		}
 	}
-};
+}
 
 // Dummy function for debugging (skips notification or granting badge,
 // but grade will still be populated in spreadsheet)
-var dontHandleGrade = function(openmrsId, grade) {
-	logger.debug('Bypassed badge or notification for: ' +
-		openmrsId + ' (' + grade + ')');
+function dontHandleGrade(openmrsId, grade) {
+	logger.debug(`Bypassed badge or notification for: ${openmrsId} (${grade})`);
 }
 
-var wakeup = function() {
-	var now = new Date().getTime();
-	if (!lastRun || (now - lastRun > MIN_INTERVAL_SECONDS*1000)) {
+function wakeup() {
+	const now = Date.now();
+	if (!lastRun || (now - lastRun > MIN_INTERVAL_SECONDS * 1000)) {
 		lastRun = now;
 		logger.debug('grading');
-		quiz.grade(handleGrade).then( () => {
+		quiz.grade(handleGrade).then(() => {
 			logger.debug('grading completed');
-		}).catch( err => {
+		}).catch(err => {
 			logger.error(err);
 		});
 	}
-};
+}
 
-var verify = Promise.coroutine(function* () {
-	yield quiz.verify();
-	yield discourse.verify();
+async function verify() {
+	await quiz.verify();
+	await discourse.verify();
 	logger.debug('connections verified');
-});
+}
 
-module.exports = {
-	verify: verify,
-	wakeup: wakeup
-};
+module.exports = { verify, wakeup };

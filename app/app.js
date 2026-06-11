@@ -20,7 +20,6 @@ var logger = log4js.getLogger('app.js');
 log4js.configure('log4js.json');
 logger.level = config.get('logger.level');
 var express = require('express');
-var Promise = require('bluebird');
 var grader = require('./grader');
 
 var PORT = process.env.PORT || 80;
