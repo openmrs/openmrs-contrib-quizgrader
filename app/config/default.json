@@ -14,8 +14,8 @@
 		"pullRequestCol": "F",
 		"responseStartRow": 3,
 		"responseStartCol": "G",
-		"responseEndCol": "AN",
-		"gradeCol": "AO"
+		"responseEndCol": "AP",
+		"gradeCol": "AQ"
 	},
 	"googleKey": {
 		"type": "service_account",
