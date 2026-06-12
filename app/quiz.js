@@ -64,8 +64,12 @@ function getCols(arr, fromA1, toA1) {
 }
 
 function getSheets() {
+  const credentials = config.get('googleKey');
   const auth = new google.auth.GoogleAuth({
-    credentials: config.get('googleKey'),
+    credentials: {
+      ...credentials,
+      private_key: credentials.private_key.replace(/\\n/g, '\n')
+    },
     scopes: ['https://www.googleapis.com/auth/spreadsheets']
   });
   return google.sheets({ version: 'v4', auth });
